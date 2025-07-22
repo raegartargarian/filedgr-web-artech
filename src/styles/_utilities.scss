@@ -1,0 +1,34 @@
+@layer utilities {
+  // Luxury utility classes
+  .luxury-gradient {
+    background: linear-gradient(135deg, #D4AF37 0%, #F5DFC2 50%, #D4AF37 100%);
+  }
+  
+  .luxury-text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #D4AF37 0%, #F5DFC2 100%);
+  }
+  
+  .luxury-border-gradient {
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, #D4AF37, #F5DFC2);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+  }
+  
+  .bg-gradient-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-from), var(--tw-gradient-to));
+  }
+}

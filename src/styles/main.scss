@@ -1,0 +1,47 @@
+@use "utilities";
+@use "base";
+@use "colors";
+@use "typography";
+@use "icons";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-shadowed {
+  text-shadow: 0 1px 4px rgba(black, 0.675);
+}
+
+.bg-grad {
+  @apply bg-gradient-to-r from-black via-gray-800 to-black;
+}
+
+.w3a-modal {
+  background: rgba(0, 0, 0, 0.99)
+}
+
+.w3a-header__button {
+  display: none !important;
+}
+
+.shadow-glow {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at center, var(--tw-gradient-from), var(--tw-gradient-to));
+}
+
+.luxury-heading {
+  @apply font-playfair font-light tracking-wider;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.luxury-price {
+  @apply font-montserrat font-light tracking-wider;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
+}
