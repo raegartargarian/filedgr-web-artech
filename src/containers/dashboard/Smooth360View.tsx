@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 
-const images360 = Array.from({ length: 9 }, (_, i) => {
+const images360 = Array.from({ length: 2 }, (_, i) => {
   const angle = i * 15;
   return import(`../../assets/images/turtle${angle}.png`);
 });

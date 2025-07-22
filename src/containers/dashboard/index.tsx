@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { GlobalSelectors } from "../global/selectors";
-import Smooth360View from "./Smooth360View";
+
+// Import the video file
+import loopVideo from "../../assets/images/loop.mov";
 
 // Import angle views for slider
 import artworkAngle1 from "../../assets/images/turtle-angle-1.png";
@@ -14,9 +16,9 @@ import artworkAngle2 from "../../assets/images/turtle-angle-2.png";
 import artworkAngle3 from "../../assets/images/turtle-angle-3.png";
 
 const angleViews = [
-  { src: artworkAngle1, label: "Front View" },
-  { src: artworkAngle2, label: "Side Detail" },
-  { src: artworkAngle3, label: "Close-up" },
+  { src: artworkAngle1, label: "" },
+  { src: artworkAngle2, label: "" },
+  { src: artworkAngle3, label: "" },
 ];
 
 const Dashboard = () => {
@@ -111,19 +113,24 @@ const Dashboard = () => {
               )}
             </motion.div>
 
-            {/* Right: 360 Artwork View */}
+            {/* Right: Video View */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
               className="relative"
             >
-              <Smooth360View
-                autoRotate={true}
-                rotationSpeed={100}
-                sensitivity={10}
-                className="w-full aspect-square"
-              />
+              <div className="relative w-full aspect-square">
+                <div className="absolute inset-0 bg-gradient-radial from-luxury-gold-500/20 via-transparent to-transparent blur-3xl" />
+                <video
+                  src={loopVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-contain relative z-10 rounded-lg"
+                />
+              </div>
             </motion.div>
           </div>
         </div>
