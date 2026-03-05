@@ -9,6 +9,9 @@ import { Link, useLocation } from "react-router-dom";
 import { appRoutes } from "../constants/routes";
 import { useWalletAddress } from "../hooks/useWalletAddr";
 
+// Import artech logo
+import artechLogo from "../../assets/images/artech.svg";
+
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -37,12 +40,12 @@ export const Header = () => {
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-3"
             >
-              <div className="w-10 h-10 bg-luxury-gold-500 rounded-full flex items-center justify-center">
-                <span className="text-obsidian-500 font-bold text-xl">A</span>
-              </div>
-              <span className="text-2xl font-playfair text-white tracking-wider">
-                ArTech
-              </span>
+              <img
+                src={artechLogo}
+                alt="ArTech"
+                className="h-10"
+                style={{ filter: "brightness(0) saturate(100%) invert(1)" }}
+              />
             </motion.div>
           </Link>
 

@@ -15,6 +15,9 @@ import {
 import { Link } from "react-router-dom";
 import { appRoutes } from "../constants/routes";
 
+// Import artech logo
+import artechLogo from "../../assets/images/artech.svg";
+
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -53,10 +56,12 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-luxury-gold-500 rounded-full flex items-center justify-center">
-                <span className="text-obsidian-500 font-bold text-2xl">A</span>
-              </div>
-              <span className="text-3xl font-playfair text-white">ArTech</span>
+              <img
+                src={artechLogo}
+                alt="ArTech"
+                className="h-12"
+                style={{ filter: "brightness(0) saturate(100%) invert(1)" }}
+              />
             </div>
 
             <p className="text-pearl-300 mb-6 max-w-sm">

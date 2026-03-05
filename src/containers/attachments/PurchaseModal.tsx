@@ -19,7 +19,7 @@ const PurchaseModal = ({
     "select" | "confirm" | "processing" | "success"
   >("select");
 
-  const pricePerFraction = 25;
+  const pricePerFraction = 6000;
   const totalPrice = quantity * pricePerFraction;
   const maxQuantity = 10; // Available fractions per artwork
 

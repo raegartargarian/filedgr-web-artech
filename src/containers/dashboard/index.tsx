@@ -29,7 +29,7 @@ const Dashboard = () => {
   const authData = useSelector(GlobalSelectors.authData);
   const totalFractions = 100;
   const availableFractions = 37;
-  const pricePerFraction = 150;
+  const pricePerFraction = 6000;
 
   // Parallax effect
   useEffect(() => {
@@ -57,14 +57,23 @@ const Dashboard = () => {
               transition={{ duration: 1, ease: "easeOut" }}
               className="text-center lg:text-left"
             >
-              <h1 className="luxury-heading text-luxury-gold-500 text-2xl mb-4">
-                ArTech Collective Presents
+              {/* Artist Name */}
+              <h1 className="luxury-heading text-luxury-gold-500 text-2xl mb-2">
+                Miao Jing
               </h1>
-              <h2 className="font-playfair text-5xl lg:text-7xl text-white mb-6 leading-tight">
-                The
+
+              {/* Main Title */}
+              <h2 className="font-playfair text-4xl lg:text-6xl text-white mb-4 leading-tight">
+                Anthology of
                 <br />
-                Masterpiece
+                Gathered Things
               </h2>
+
+              {/* Subtitle */}
+              <h3 className="text-pearl-200 text-xl mb-6 font-light">
+                Digital sculptures displayed on 7 LCD screens
+              </h3>
+
               <p className="text-pearl-200 text-lg mb-8 max-w-lg mx-auto lg:mx-0">
                 A groundbreaking fusion of traditional and digital art
                 techniques, created by our most talented artist. Own a piece of
