@@ -1,0 +1,19 @@
+# Netlify build for filedgr-web-artech.
+#
+# @filedgr/web-core is a private GitHub Packages dependency: set NODE_AUTH_TOKEN
+# (a token with read:packages) in the Netlify site's environment variables so
+# the repo .npmrc can authenticate the install. Build-time VITE_* variables
+# (see .env.example) are configured there too.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# HashRouter handles in-app routes; this keeps deep links and refreshes on any
+# path serving the SPA shell.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
