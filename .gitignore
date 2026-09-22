@@ -24,3 +24,14 @@ dist-ssr
 *.sln
 *.sw?
 template.zip
+
+# Build output
+build/
+*.tsbuildinfo
+
+# Local env files (keep the example)
+.env*
+!.env.example
+
+# Archives (template bundles are built, not committed)
+*.zip
