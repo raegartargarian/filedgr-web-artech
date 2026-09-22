@@ -10,7 +10,9 @@ function* fetchData(): any {
     const data = JSONFile as GlobalState["data"];
     console.log("🚀 ~ function*fetchData ~ data:", data);
     yield put(globalActions.setData(data));
-  } catch (error) {}
+  } catch {
+    // ledger.json is bundled at build time; nothing to recover from here.
+  }
 }
 function* fetchTokencodes(): any {
   try {

@@ -13,38 +13,33 @@ export const GlobalProvider = () => {
     dispatch(globalActions.fetchData());
     dispatch(globalActions.fetchTokencodes());
   }, [dispatch]);
+
   useEffect(() => {
     if (!isLoading && !isAuthenticated && login) {
-      login();
-    } else {
-      if (isAuthenticated) {
-        const getUserData = async () => {
-          const jwtToken = user.idToken;
-          localStorage.setItem(LocalStorageKeys.jwtAccessKey, jwtToken);
-          isLoading !== undefined &&
-            isAuthenticated !== undefined &&
-            provider !== undefined &&
-            user !== undefined &&
-            login !== undefined &&
-            logout !== undefined &&
-            dispatch !== undefined &&
-            dispatch(
-              globalActions.setAuthData({
-                login,
-                isLoading,
-                isAuthenticated,
-                userWeb3: user,
-                logout,
-                provider,
-                error: null,
-              })
-            );
-        };
-
-        getUserData().catch(console.error);
-      }
+      // The core provider's login rejects when the modal is closed or the
+      // connection fails; there is nothing to recover, so just log it.
+      login().catch((error) => console.error("Login error:", error));
+      return;
     }
-  }, [isLoading, isAuthenticated, login]);
+    // Wait for the normalized user (and its id token) — it lands a render
+    // after isAuthenticated flips.
+    if (isAuthenticated && user && login && logout) {
+      if (user.idToken) {
+        localStorage.setItem(LocalStorageKeys.jwtAccessKey, user.idToken);
+      }
+      dispatch(
+        globalActions.setAuthData({
+          login,
+          isLoading: !!isLoading,
+          isAuthenticated,
+          userWeb3: user,
+          logout,
+          provider: provider ?? null,
+          error: null,
+        })
+      );
+    }
+  }, [isLoading, isAuthenticated, user, provider, login, logout, dispatch]);
 
   return null;
 };

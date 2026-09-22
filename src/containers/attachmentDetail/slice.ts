@@ -1,8 +1,7 @@
 import { ModelDocumentation } from "@/shared/utils/zipHandler";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AttachmentModel } from "../attachments/types";
-import { FileStructure } from "./components/codeBlock";
-import { AttachmentDetailState } from "./types";
+import { AttachmentDetailState, FileStructure } from "./types";
 
 const initialState: AttachmentDetailState = {
   attachment: null,

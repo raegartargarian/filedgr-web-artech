@@ -1,4 +1,4 @@
-import { getAttachmentDetail } from "@/shared/providers/templateSDK";
+import { getAttachmentDetail } from "@/shared/providers/api";
 import {
   getIPFSIMGAddr,
   getIPFSIMGAddrPrivate,

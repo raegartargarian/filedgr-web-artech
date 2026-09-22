@@ -1,4 +1,4 @@
-import { getTokensAttachment } from "@/shared/providers/templateSDK";
+import { getTokensAttachment } from "@/shared/providers/api";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { attachmentsActions } from "./slice";
 import { AttachmentModel } from "./types";
@@ -11,8 +11,8 @@ function* fetchAttachmentsSaga(
     const tokenCode = token.value;
     const response = yield call(getTokensAttachment, {
       tokenCode,
-      page: page.toString(),
-      pageSize: "15",
+      page,
+      pageSize: 15,
     });
 
     let crPage = page;

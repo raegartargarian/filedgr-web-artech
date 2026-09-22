@@ -1,13 +1,11 @@
-export interface INetworkModel {
-  id: string;
-  name: string;
-  symbol: string;
-  logoUrl: string;
-  isTestnet?: boolean;
-  chainId?: number;
-  serverName: NETWORK_SERVER_NAMES;
-  explorerUrl: string;
-}
+import type {
+  INetworkModel,
+  NETWORK_SERVER_NAMES,
+} from "@filedgr/web-core/web3";
+
+// The network model and ledger enum are shared with the other Filedgr apps
+// via @filedgr/web-core; re-exported so existing imports keep working.
+export type { INetworkModel, NETWORK_SERVER_NAMES };
 
 // Network Configuration with updated logo URLs
 export const SUPPORTED_NETWORKS: INetworkModel[] = [
@@ -19,7 +17,7 @@ export const SUPPORTED_NETWORKS: INetworkModel[] = [
       "https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png",
     chainId: 137,
     serverName: "POLYGON_ZKEVM",
-    explorerUrl: import.meta.env.VITE_POLYGON_SCANNER,
+    explorerUrl: import.meta.env.VITE_POLYGON_SCANNER ?? "",
   },
   {
     id: "xrp",
@@ -29,7 +27,7 @@ export const SUPPORTED_NETWORKS: INetworkModel[] = [
       "https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png",
     chainId: 1,
     serverName: "XRPL",
-    explorerUrl: import.meta.env.VITE_XRP_SCANNER,
+    explorerUrl: import.meta.env.VITE_XRP_SCANNER ?? "",
   },
   {
     id: "ethereum",
@@ -38,7 +36,7 @@ export const SUPPORTED_NETWORKS: INetworkModel[] = [
     logoUrl: "https://assets.coingecko.com/coins/images/279/small/ethereum.png",
     chainId: 1,
     serverName: "ETHEREUM",
-    explorerUrl: import.meta.env.VITE_ETHEREUM_SCANNER,
+    explorerUrl: import.meta.env.VITE_ETHEREUM_SCANNER ?? "",
   },
   // {
   //   id: 'avalanche',
@@ -85,8 +83,6 @@ export const getLedgerNameFromServerName = (
       ?.name || ""
   );
 };
-
-export type NETWORK_SERVER_NAMES = "POLYGON_ZKEVM" | "XRPL" | "ETHEREUM";
 
 export const getNetworkLogoByServerName = (
   serverName: NETWORK_SERVER_NAMES | undefined

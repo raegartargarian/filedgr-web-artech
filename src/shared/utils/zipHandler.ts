@@ -1,5 +1,9 @@
-import { FileStructure } from "@/containers/attachmentDetail/components/codeBlock";
-import JSZip from "jszip";
+// Zip extraction comes from @filedgr/web-core (worker-backed, with a
+// main-thread fallback). Only the Artech-specific shaping stays here: telling a
+// model-documentation bundle from a code repository and building the folder
+// tree for the latter.
+import type { FileStructure } from "@/containers/attachmentDetail/types";
+import { extractZipFiles } from "@filedgr/web-core/zip";
 import { getLanguageFromFileName, isBinaryFile } from "./fileHelpers";
 
 export interface ModelDocumentation {
@@ -12,7 +16,7 @@ export interface ProcessedZipContent {
   content: FileStructure[] | ModelDocumentation;
 }
 
-function buildFileStructure(paths: string[]): FileStructure[] {
+export function buildFileStructure(paths: string[]): FileStructure[] {
   // Sort paths to ensure folders come before their contents
   paths.sort();
 
@@ -123,11 +127,11 @@ function buildFileStructure(paths: string[]): FileStructure[] {
 export async function processZipFile(
   zipData: ArrayBuffer
 ): Promise<ProcessedZipContent> {
-  const zip = new JSZip();
-  const contents = await zip.loadAsync(zipData);
+  // File entries only (directories are implied by their paths).
+  const entries = await extractZipFiles(new Blob([zipData]));
 
   // Get all file paths
-  const paths = Object.keys(contents.files);
+  const paths = Array.from(entries.keys());
 
   // Check if this is a model documentation zip by looking for model.json in the root only
   const hasModelJson = paths.some(
@@ -144,20 +148,18 @@ export async function processZipFile(
       textFiles: [],
     };
 
-    for (const [path, file] of Object.entries(contents.files)) {
-      if (file.dir) continue;
-
+    for (const [path, file] of entries) {
       if (path.endsWith(".json")) {
-        const content = await file.async("text");
+        const content = await file.text();
         try {
           modelDocumentation.modelDetails = JSON.parse(content);
-        } catch (e) {
+        } catch {
           console.error(`Failed to parse JSON file: ${path}`);
         }
       } else if (path.endsWith(".txt") || path.endsWith(".md")) {
         modelDocumentation.textFiles.push({
           name: path.split("/").pop() || "",
-          content: await file.async("text"),
+          content: await file.text(),
         });
       }
     }
@@ -202,13 +204,13 @@ export async function processZipFile(
     if (node.type === "file") {
       // Reconstruct the original path in the zip
       const originalPath = commonPrefix + currentPath;
-      const file = contents.files[originalPath];
+      const file = entries.get(originalPath);
 
-      if (file && !file.dir) {
+      if (file) {
         // Only load content for text files, skip binaries
         if (!isBinaryFile(node.name)) {
           try {
-            node.code = await file.async("text");
+            node.code = await file.text();
             // Infer language from file extension for syntax highlighting
             node.language = getLanguageFromFileName(node.name);
           } catch (e: any) {

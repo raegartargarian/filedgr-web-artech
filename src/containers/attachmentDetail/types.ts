@@ -1,6 +1,14 @@
 import { ModelDocumentation } from "@/shared/utils/zipHandler";
 import { AttachmentModel } from "../attachments/types";
-import { FileStructure } from "./components/codeBlock";
+
+/** A node of the folder tree built from a code-repository zip attachment. */
+export interface FileStructure {
+  name: string;
+  type: "file" | "folder";
+  language?: string;
+  code?: string;
+  children?: FileStructure[];
+}
 
 export interface AttachmentDetailState {
   attachment: AttachmentModel | null;

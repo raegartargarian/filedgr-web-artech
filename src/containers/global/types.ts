@@ -1,5 +1,5 @@
 import { NETWORK_SERVER_NAMES } from "@/shared/utils/networks";
-import { IProvider } from "@web3auth/base";
+import type { IProvider } from "@web3auth/modal";
 export interface JSONNft {
   vault: Vault;
   data: Data;
