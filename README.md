@@ -4,6 +4,61 @@ This is the **ArTech Luxury Art Marketplace Template** for Filedgr.
 
 Templates define the structure and behavior of digital twins in Filedgr.
 
+## Development
+
+Vite + React + TypeScript. Shared Filedgr machinery (template API client,
+Web3Auth v10 session, zip extraction, formatting) comes from the private
+[`@filedgr/web-core`](https://github.com/Filedgr/filedgr-web-core) package.
+
+### Setup
+
+`@filedgr/*` packages are served from GitHub Packages (see `.npmrc`), so
+installs need a token with `read:packages` in `NODE_AUTH_TOKEN`:
+
+```bash
+gh auth refresh -s read:packages      # once
+export NODE_AUTH_TOKEN=$(gh auth token)
+npm install
+cp .env.example .env                  # then fill in the values
+npm run dev
+```
+
+Requires Node 20.19+.
+
+### Environment variables
+
+Read at build time by Vite (see `.env.example`):
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_POLYGON_SCANNER` | Polygon explorer base URL for vault/tx links |
+| `VITE_XRP_SCANNER` | XRPL explorer base URL for vault/tx links |
+| `VITE_ETHEREUM_SCANNER` | Ethereum explorer base URL for vault/tx links |
+
+The environment itself (template API, Web3Auth network and client id, IPFS
+gateways) is selected by `env` in `src/json/ledger.json`
+(`DEVELOPMENT` / `TESTNET` / `MAINNET`).
+
+### Scripts
+
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Dev server |
+| `npm run build` | Type-check and build to `dist/` |
+| `npm run preview` | Serve the production build |
+| `npm run lint` | ESLint |
+| `npm test` | Unit tests (Vitest) |
+| `npm run format` | Prettier |
+
+### CI and deploy
+
+- `.github/workflows/pr-iso-compliance.yml` runs the unit tests on every pull
+  request (`iso-compliance` status check); it authenticates the package install
+  with the `PACKAGES_GHCR_TOKEN` secret.
+- Deploys run on Netlify (`netlify.toml`: `npm run build`, publish `dist`, SPA
+  fallback). Set `NODE_AUTH_TOKEN` and the `VITE_*` variables in the Netlify
+  site environment.
+
 ## Template Types
 
 **Art Marketplace Templates**
