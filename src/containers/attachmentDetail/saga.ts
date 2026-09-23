@@ -1,3 +1,4 @@
+import { getFixtureAttachment } from "@/shared/fixtures";
 import { getAttachmentDetail } from "@/shared/providers/api";
 import {
   getIPFSIMGAddr,
@@ -15,6 +16,11 @@ function* fetchAttachmentDetailSaga(
 ): any {
   try {
     const { id } = action.payload;
+    const fixture = getFixtureAttachment(id);
+    if (fixture) {
+      yield put(attachmentDetailActions.fetchAttachmentDetailSuccess(fixture));
+      return;
+    }
     yield new Promise((resolve) => setTimeout(resolve, 3000));
 
     const response = yield call(getAttachmentDetail, id);

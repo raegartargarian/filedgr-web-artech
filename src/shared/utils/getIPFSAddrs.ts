@@ -1,5 +1,6 @@
 import { GlobalState } from "@/containers/global/types";
 import JSONFile from "@/json/ledger.json";
+import { getFixtureFileUrl } from "@/shared/fixtures";
 
 const jsonData = JSONFile as GlobalState["data"];
 const getIPFsPubAddr = () => {
@@ -18,8 +19,8 @@ const getIPFsPrivAddr = () => {
 };
 
 export const getIPFSIMGAddr = (cid: string) => {
-  return `https://${cid}${getIPFsPubAddr()}`;
+  return getFixtureFileUrl(cid) ?? `https://${cid}${getIPFsPubAddr()}`;
 };
 export const getIPFSIMGAddrPrivate = (cid: string) => {
-  return `https://${cid}${getIPFsPrivAddr()}`;
+  return getFixtureFileUrl(cid) ?? `https://${cid}${getIPFsPrivAddr()}`;
 };

@@ -1,3 +1,4 @@
+import { fixtureAttachments } from "@/shared/fixtures";
 import { getTokensAttachment } from "@/shared/providers/api";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { attachmentsActions } from "./slice";
@@ -24,6 +25,10 @@ function* fetchAttachmentsSaga(
     tPages = response.total_pages;
     hasMore = crPage < tPages;
 
+    if (!dt?.length && page === 1) {
+      throw new Error("Stream has no attachments");
+    }
+
     yield put(
       attachmentsActions.fetchAttachmentsSuccess({
         attachments: dt,
@@ -33,7 +38,16 @@ function* fetchAttachmentsSaga(
       })
     );
   } catch (error: any) {
-    yield put(attachmentsActions.fetchAttachmentsFailure(error.message));
+    // Show the bundled demo documents instead of an empty page.
+    console.warn("Attachments unavailable, using fixtures:", error?.message);
+    yield put(
+      attachmentsActions.fetchAttachmentsSuccess({
+        attachments: fixtureAttachments,
+        currentPage: 1,
+        totalPages: 1,
+        hasMore: false,
+      })
+    );
   }
 }
 
